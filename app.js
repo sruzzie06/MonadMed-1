@@ -7,8 +7,17 @@
 // Smart Contract Configuration
 // ===========================================
 
-// TODO: Replace with your deployed contract address on Monad Testnet
-const CONTRACT_ADDRESS = "PASTE_DEPLOYED_CONTRACT_ADDRESS";
+// Deployed contract address on Monad Testnet
+const CONTRACT_ADDRESS = "0xebf641822e39b3e5e381f18d1eFACFFD5E60F845";
+
+// Monad Testnet network configuration
+const MONAD_TESTNET = {
+    chainId: "0x279F", // 10143 in hex
+    chainName: "Monad Testnet",
+    nativeCurrency: { name: "MON", symbol: "MON", decimals: 18 },
+    rpcUrls: ["https://testnet-rpc.monad.xyz"],
+    blockExplorerUrls: ["https://testnet.monad.xyz"]
+};
 
 // ABI for the MediVault smart contract
 const CONTRACT_ABI = [
@@ -89,6 +98,38 @@ function isMetaMaskInstalled() {
 /**
  * Connect user's MetaMask wallet
  */
+/**
+ * Switch or add Monad Testnet in MetaMask
+ */
+async function switchToMonadTestnet() {
+    try {
+        await window.ethereum.request({
+            method: 'wallet_switchEthereumChain',
+            params: [{ chainId: MONAD_TESTNET.chainId }]
+        });
+    } catch (switchError) {
+        // Chain not added yet — add it
+        if (switchError.code === 4902) {
+            await window.ethereum.request({
+                method: 'wallet_addEthereumChain',
+                params: [MONAD_TESTNET]
+            });
+        } else {
+            throw switchError;
+        }
+    }
+}
+
+/**
+ * Initialize provider, signer, and contract from the current MetaMask state
+ */
+async function initializeEthers() {
+    provider = new ethers.BrowserProvider(window.ethereum);
+    signer = await provider.getSigner();
+    userAddress = await signer.getAddress();
+    contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
+}
+
 async function connectWallet() {
     try {
         // Check if MetaMask is installed
@@ -103,14 +144,11 @@ async function connectWallet() {
         });
 
         if (accounts && accounts.length > 0) {
-            userAddress = accounts[0];
-            
-            // Initialize provider and signer
-            provider = new ethers.BrowserProvider(window.ethereum);
-            signer = await provider.getSigner();
-            
-            // Initialize contract
-            contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
+            // Switch to Monad Testnet
+            await switchToMonadTestnet();
+
+            // Initialize ethers provider, signer, contract
+            await initializeEthers();
 
             // Store wallet address in session storage
             sessionStorage.setItem('walletAddress', userAddress);
@@ -299,6 +337,29 @@ async function loadEmergencyInfo() {
 async function initializeDashboard() {
     // Check if user is connected
     if (!checkWalletConnection()) {
+        return;
+    }
+
+    // Re-initialize ethers (provider/signer/contract lost on page navigation)
+    try {
+        if (!isMetaMaskInstalled()) {
+            showError("MetaMask is not installed. Please install MetaMask extension.");
+            return;
+        }
+
+        const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+        if (!accounts || accounts.length === 0) {
+            // Not connected in MetaMask anymore
+            sessionStorage.removeItem('walletAddress');
+            window.location.href = 'index.html';
+            return;
+        }
+
+        await switchToMonadTestnet();
+        await initializeEthers();
+        sessionStorage.setItem('walletAddress', userAddress);
+    } catch (err) {
+        showError('Failed to reconnect wallet: ' + err.message);
         return;
     }
 
