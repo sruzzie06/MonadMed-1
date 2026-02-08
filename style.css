@@ -126,8 +126,8 @@ body {
 }
 
 .card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 123, 255, 0.12);
 }
 
 .card h2 {
@@ -207,11 +207,16 @@ body {
 
 .button:hover {
     transform: translateY(-2px);
-    box-shadow: var(--button-shadow);
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
 }
 
 .button:active {
     transform: translateY(0);
+}
+
+.button:focus {
+    outline: 2px solid var(--primary-light);
+    outline-offset: 2px;
 }
 
 .button-primary {
@@ -333,6 +338,18 @@ body {
     border-radius: 8px;
     margin-top: 1rem;
     font-weight: 500;
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
 .status-message.hidden {
@@ -409,6 +426,18 @@ body {
     padding: 3rem;
     text-align: center;
     margin-bottom: 2rem;
+    animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .hero-content h2 {
@@ -439,6 +468,12 @@ body {
     padding: 1.5rem;
     border-radius: 8px;
     backdrop-filter: blur(10px);
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.feature:hover {
+    transform: scale(1.05);
+    background: rgba(255, 255, 255, 0.2);
 }
 
 .feature-icon {

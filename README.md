@@ -2,14 +2,19 @@
 
 A complete full-stack decentralized website that allows users to store and retrieve emergency medical information using a smart contract deployed on the Monad blockchain.
 
+🌐 **Live Demo:** [https://monad-med-1.vercel.app](https://monad-med-1.vercel.app)  
+📝 **Smart Contract:** `0xebf641822e39b3e5e381f18d1eFACFFD5E60F845`  
+⛓️ **Network:** Monad Testnet (Chain ID: 10143)
+
 ## Features
 
-✅ **Wallet Integration** - Connect MetaMask wallet seamlessly  
-✅ **Store Medical Info** - Save blood group, emergency contact, and medical notes  
-✅ **Retrieve Data** - Load your medical information anytime  
-✅ **Blockchain Secured** - All data stored on Monad blockchain  
-✅ **Responsive Design** - Works on desktop, tablet, and mobile  
+✅ **Wallet Integration** - Connect MetaMask wallet seamlessly with auto-network switching  
+✅ **Store Medical Info** - Save blood group, emergency contact, and medical notes on-chain  
+✅ **Retrieve Data** - Load your medical information anytime from anywhere  
+✅ **Blockchain Secured** - All data permanently stored on Monad blockchain  
+✅ **Responsive Design** - Works flawlessly on desktop, tablet, and mobile  
 ✅ **No Backend Server** - Fully client-side, decentralized application  
+✅ **Auto Network Switch** - Automatically adds and switches to Monad Testnet  
 
 ## Project Structure
 
@@ -85,19 +90,14 @@ Deploy this contract using:
 
 Save the deployed contract address!
 
-### 3. Configure the Website
+### 3. Contract Configuration
 
-1. Open `app.js`
-2. Find this line:
-   ```javascript
-   const CONTRACT_ADDRESS = "PASTE_DEPLOYED_CONTRACT_ADDRESS";
-   ```
-3. Replace `PASTE_DEPLOYED_CONTRACT_ADDRESS` with your actual deployed contract address on Monad Testnet
-
-Example:
+The contract address is already configured:
 ```javascript
-const CONTRACT_ADDRESS = "0x1234567890abcdef1234567890abcdef12345678";
+const CONTRACT_ADDRESS = "0xebf641822e39b3e5e381f18d1eFACFFD5E60F845";
 ```
+
+If you deploy your own contract, update this address in `app.js`.
 
 ### 4. Run the Website
 
@@ -149,14 +149,14 @@ http-server
 
 ### Frontend
 - **HTML5** - Semantic markup
-- **CSS3** - Modern, responsive styling
+- **CSS3** - Modern, responsive styling with animations
 - **JavaScript (Vanilla)** - No frameworks, pure JavaScript
-- **ethers.js v6** - Blockchain interaction
+- **ethers.js v6.13.4** - Blockchain interaction via cdnjs
 
 ### Blockchain
-- **Solidity** - Smart contract language
-- **Monad Blockchain** - L1 blockchain
-- **MetaMask** - Wallet provider
+- **Solidity ^0.8.0** - Smart contract language
+- **Monad Testnet** - High-performance L1 blockchain
+- **MetaMask** - Web3 wallet provider with auto-network switching
 
 ## API Integration
 
@@ -219,24 +219,22 @@ const info = await contract.getEmergencyInfo(userAddress);
 Visit the Monad faucet to get free MON testnet tokens:
 - https://testnet.monad.xyz/#/faucet
 
-## Deployment Options
+## Deployment
 
-### 1. GitHub Pages (Free)
-1. Push to GitHub
-2. Enable GitHub Pages in repository settings
-3. Access at `https://username.github.io/medivault-website`
+### Current Deployment: Vercel ✅
 
-### 2. Vercel (Free)
-1. Connect GitHub repo to Vercel
-2. Deploy automatically
+**Live URL:** https://monad-med-1.vercel.app
 
-### 3. Netlify (Free)
-1. Drag and drop folder
-2. Get a live URL instantly
+**Deployment is automated:**
+- Every push to `main` branch triggers automatic deployment
+- Changes go live in ~1 minute
+- No build step required (static site)
 
-### 4. IPFS (Decentralized)
-1. Upload to Pinata or Fleek
-2. Access via IPFS gateway
+### Alternative Deployment Options
+
+1. **GitHub Pages** - Enable in repo settings
+2. **Netlify** - Drag and drop or connect GitHub
+3. **IPFS** - Upload to Pinata/Fleek for fully decentralized hosting
 
 ## Future Enhancements
 
