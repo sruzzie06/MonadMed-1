@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediVault - Decentralized Emergency Medical Access</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <img src="assets/logo.png" alt="MediVault Logo" class="logo">
+                <h1>MediVault</h1>
+            </div>
+            <div class="header-nav">
+                <a href="index.html" class="nav-link active">Home</a>
+                <a href="dashboard.html" class="nav-link">Dashboard</a>
+            </div>
+        </div>
+    </div>
+
+    <main class="container">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h2>Decentralized Emergency Medical Access</h2>
+                <p class="tagline">Store your emergency medical information securely on the blockchain. Always accessible, always protected.</p>
+                
+                <div class="feature-list">
+                    <div class="feature">
+                        <span class="feature-icon">🔐</span>
+                        <p>Secure & Private</p>
+                    </div>
+                    <div class="feature">
+                        <span class="feature-icon">⛓️</span>
+                        <p>Blockchain Backed</p>
+                    </div>
+                    <div class="feature">
+                        <span class="feature-icon">🚨</span>
+                        <p>Emergency Ready</p>
+                    </div>
+                </div>
+
+                <div class="description">
+                    <h3>What is MediVault?</h3>
+                    <p>MediVault Lite is a decentralized application built on the Monad blockchain that allows you to securely store and retrieve critical emergency medical information. In case of an emergency, first responders can quickly access your vital medical data including blood group, emergency contacts, and medical notes.</p>
+                    <p>Your data is encrypted and stored on the blockchain, ensuring it's always available when you need it most.</p>
+                </div>
+
+                <button id="connectWalletBtn" class="button button-primary button-large">
+                    Connect MetaMask Wallet
+                </button>
+
+                <p id="connectionStatus" class="status-message"></p>
+            </div>
+        </section>
+
+        <!-- Info Section -->
+        <section class="info-section">
+            <div class="card">
+                <h3>How It Works</h3>
+                <ol>
+                    <li><strong>Connect Wallet:</strong> Sign in with your MetaMask wallet</li>
+                    <li><strong>Store Your Info:</strong> Enter your blood group, emergency contact, and medical notes</li>
+                    <li><strong>Save to Blockchain:</strong> Your data is securely stored on Monad blockchain</li>
+                    <li><strong>Emergency Access:</strong> Your information can be retrieved anytime</li>
+                </ol>
+            </div>
+
+            <div class="card">
+                <h3>Why Blockchain?</h3>
+                <ul>
+                    <li>&#10003; Decentralized - No single point of failure</li>
+                    <li>&#10003; Transparent - You control your data</li>
+                    <li>&#10003; Immutable - Your records are permanent and secure</li>
+                    <li>&#10003; Always Available - Access your info from anywhere</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2024 MediVault Lite. Decentralized Emergency Medical Access.</p>
+        <p>Powered by Monad Blockchain</p>
+    </footer>
+
+    <script src="https://cdn.ethers.io/v6/ethers.umd.js"></script>
+    <script src="app.js"></script>
+    <script>
+        // Initialize wallet connection on landing page
+        document.getElementById('connectWalletBtn').addEventListener('click', connectWallet);
+    </script>
+</body>
+</html>

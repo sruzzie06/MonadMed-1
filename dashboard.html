@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediVault Dashboard - Emergency Medical Access</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <img src="assets/logo.png" alt="MediVault Logo" class="logo">
+                <h1>MediVault</h1>
+            </div>
+            <div class="header-nav">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="dashboard.html" class="nav-link active">Dashboard</a>
+            </div>
+        </div>
+    </div>
+
+    <main class="container dashboard-container">
+        <!-- Wallet Status Section -->
+        <section class="card wallet-card">
+            <h2>Wallet Information</h2>
+            <div class="wallet-info">
+                <p class="wallet-address">
+                    <strong>Connected Address:</strong>
+                    <span id="walletAddress">Not connected</span>
+                    <button id="copyAddressBtn" class="button button-small">Copy</button>
+                </p>
+                <p class="network-info">
+                    <strong>Network:</strong>
+                    <span id="networkInfo">Not connected</span>
+                </p>
+                <button id="disconnectBtn" class="button button-secondary">Disconnect Wallet</button>
+            </div>
+        </section>
+
+        <!-- Store Emergency Info Section -->
+        <section class="card form-card">
+            <h2>Store Your Emergency Information</h2>
+            <form id="emergencyForm" class="form">
+                <div class="form-group">
+                    <label for="bloodGroup">Blood Group</label>
+                    <input 
+                        type="text" 
+                        id="bloodGroup" 
+                        name="bloodGroup" 
+                        placeholder="e.g., O+, AB-, B+"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="emergencyContact">Emergency Contact</label>
+                    <input 
+                        type="tel" 
+                        id="emergencyContact" 
+                        name="emergencyContact" 
+                        placeholder="e.g., +1 (555) 123-4567"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="medicalNotes">Medical Notes</label>
+                    <textarea 
+                        id="medicalNotes" 
+                        name="medicalNotes" 
+                        placeholder="e.g., Diabetic, Allergic to Penicillin..."
+                        rows="4"
+                    ></textarea>
+                </div>
+
+                <button type="submit" class="button button-primary button-large">Save Emergency Info</button>
+            </form>
+        </section>
+
+        <!-- View Emergency Info Section -->
+        <section class="card info-card">
+            <h2>View Your Emergency Information</h2>
+            <button id="loadInfoBtn" class="button button-primary">Load My Information</button>
+
+            <div id="displayInfo" class="display-info hidden">
+                <div class="info-item">
+                    <label>Blood Group:</label>
+                    <p id="displayBloodGroup">-</p>
+                </div>
+
+                <div class="info-item">
+                    <label>Emergency Contact:</label>
+                    <p id="displayContact">-</p>
+                </div>
+
+                <div class="info-item">
+                    <label>Medical Notes:</label>
+                    <p id="displayNotes">-</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Status/Messages Section -->
+        <section class="status-section">
+            <div id="statusMessage" class="status-message hidden"></div>
+            <div id="loadingSpinner" class="loading-spinner hidden">
+                <div class="spinner"></div>
+                <p id="loadingText">Processing...</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2024 MediVault Lite. Decentralized Emergency Medical Access.</p>
+        <p>Powered by Monad Blockchain</p>
+    </footer>
+
+    <script src="https://cdn.ethers.io/v6/ethers.umd.js"></script>
+    <script src="app.js"></script>
+    <script>
+        // Initialize dashboard on page load
+        document.addEventListener('DOMContentLoaded', initializeDashboard);
+    </script>
+</body>
+</html>
