@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Dashboard - MediVault</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <img src="assets/logo.png" alt="MediVault Logo" class="logo">
+                <h1>MediVault - Patient Portal</h1>
+            </div>
+            <div class="header-nav">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="#emergency" class="nav-link">Emergency</a>
+                <button id="disconnectBtn" class="button button-secondary button-small">Disconnect</button>
+            </div>
+        </div>
+    </div>
+
+    <main class="container dashboard-container">
+        <!-- Wallet Status Section -->
+        <section class="card wallet-card">
+            <h2>👤 Patient Information</h2>
+            <div class="wallet-info">
+                <p class="wallet-address">
+                    <strong>Address:</strong>
+                    <span id="walletAddress">Loading...</span>
+                    <button id="copyAddressBtn" class="button button-small">Copy</button>
+                </p>
+                <p class="network-info">
+                    <strong>Network:</strong>
+                    <span id="networkInfo">Monad Testnet</span>
+                </p>
+            </div>
+        </section>
+
+        <!-- Emergency Info Section -->
+        <section class="card form-card">
+            <h2>🚨 Emergency Information</h2>
+            <form id="emergencyForm" class="form">
+                <div class="form-group">
+                    <label for="bloodGroup">Blood Group *</label>
+                    <input 
+                        type="text" 
+                        id="bloodGroup" 
+                        placeholder="e.g., O+, AB-, B+"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="emergencyContact">Emergency Contact *</label>
+                    <input 
+                        type="tel" 
+                        id="emergencyContact" 
+                        placeholder="e.g., +91 98765 43210"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="medicalNotes">Medical Notes (Allergies, Conditions)</label>
+                    <textarea 
+                        id="medicalNotes" 
+                        placeholder="e.g., Allergic to Penicillin, Diabetic..."
+                        rows="3"
+                    ></textarea>
+                </div>
+
+                <button type="submit" class="button button-primary">Save Emergency Info</button>
+            </form>
+            
+            <button id="loadEmergencyBtn" class="button button-secondary" style="margin-top: 1rem;">Load My Emergency Info</button>
+            
+            <div id="emergencyDisplay" class="display-info hidden">
+                <h3>Your Emergency Information</h3>
+                <div class="info-item">
+                    <label>Blood Group:</label>
+                    <p id="displayBloodGroup">-</p>
+                </div>
+                <div class="info-item">
+                    <label>Emergency Contact:</label>
+                    <p id="displayContact">-</p>
+                </div>
+                <div class="info-item">
+                    <label>Medical Notes:</label>
+                    <p id="displayNotes">-</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Upload Documents Section -->
+        <section class="card">
+            <h2>📄 Upload Medical Documents</h2>
+            <form id="uploadForm" class="form">
+                <div class="form-group">
+                    <label for="documentType">Document Type *</label>
+                    <select id="documentType" required>
+                        <option value="">Select type...</option>
+                        <option value="prescription">Prescription</option>
+                        <option value="lab_report">Lab Report</option>
+                        <option value="scan">Scan/X-Ray</option>
+                        <option value="discharge">Discharge Summary</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="documentDescription">Description</label>
+                    <input 
+                        type="text" 
+                        id="documentDescription" 
+                        placeholder="Brief description"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="documentFile">Select File *</label>
+                    <input 
+                        type="file" 
+                        id="documentFile" 
+                        accept=".pdf,.jpg,.jpeg,.png"
+                        required
+                    >
+                    <small>Supported: PDF, JPG, PNG (Max 10MB)</small>
+                </div>
+
+                <button type="submit" class="button button-primary">Upload Document</button>
+            </form>
+        </section>
+
+        <!-- Medical Documents List -->
+        <section class="card">
+            <h2>📋 My Medical Documents</h2>
+            <button id="loadDocumentsBtn" class="button button-secondary">Refresh Documents</button>
+            <div id="documentsList" class="records-list">
+                <p class="info-text">Click "Refresh Documents" to load your uploaded files</p>
+            </div>
+        </section>
+
+        <!-- Medical History Section -->
+        <section class="card">
+            <h2>🏥 Medical History</h2>
+            <button id="loadRecordsBtn" class="button button-secondary">Load Medical Records</button>
+            <div id="recordsList" class="records-list">
+                <p class="info-text">Click "Load Medical Records" to view your history</p>
+            </div>
+        </section>
+
+        <!-- Doctor Visits Section -->
+        <section class="card">
+            <h2>👨‍⚕️ Recent Doctor Visits</h2>
+            <button id="loadVisitsBtn" class="button button-secondary">Load Visit History</button>
+            <div id="visitsList" class="records-list">
+                <p class="info-text">Click "Load Visit History" to view your appointments</p>
+            </div>
+        </section>
+
+        <!-- Grant Doctor Access Section -->
+        <section class="card">
+            <h2>🔐 Grant Doctor Access</h2>
+            <form id="grantAccessForm" class="form">
+                <div class="form-group">
+                    <label for="doctorAddress">Doctor's Wallet Address</label>
+                    <input 
+                        type="text" 
+                        id="doctorAddress" 
+                        placeholder="0x..."
+                        required
+                    >
+                </div>
+                <button type="submit" class="button button-primary">Grant Access</button>
+            </form>
+        </section>
+
+        <!-- Emergency Numbers -->
+        <section class="card emergency-card" id="emergency">
+            <h2>🚨 Emergency Helpline Numbers (India)</h2>
+            <div class="emergency-numbers">
+                <div class="emergency-item">
+                    <span class="emergency-name">National Emergency</span>
+                    <a href="tel:112" class="emergency-number">112</a>
+                </div>
+                <div class="emergency-item">
+                    <span class="emergency-name">Ambulance</span>
+                    <a href="tel:108" class="emergency-number">108</a>
+                </div>
+                <div class="emergency-item">
+                    <span class="emergency-name">Medical Emergency</span>
+                    <a href="tel:102" class="emergency-number">102</a>
+                </div>
+                <div class="emergency-item">
+                    <span class="emergency-name">Police</span>
+                    <a href="tel:100" class="emergency-number">100</a>
+                </div>
+                <div class="emergency-item">
+                    <span class="emergency-name">Fire</span>
+                    <a href="tel:101" class="emergency-number">101</a>
+                </div>
+                <div class="emergency-item">
+                    <span class="emergency-name">Women Helpline</span>
+                    <a href="tel:1091" class="emergency-number">1091</a>
+                </div>
+                <div class="emergency-item">
+                    <span class="emergency-name">Child Helpline</span>
+                    <a href="tel:1098" class="emergency-number">1098</a>
+                </div>
+                <div class="emergency-item">
+                    <span class="emergency-name">Mental Health</span>
+                    <a href="tel:08046110007" class="emergency-number">0804-611-0007</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Status Messages -->
+        <section class="status-section">
+            <div id="statusMessage" class="status-message hidden"></div>
+            <div id="loadingSpinner" class="loading-spinner hidden">
+                <div class="spinner"></div>
+                <p id="loadingText">Processing...</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2024 MediVault. Decentralized Healthcare Platform.</p>
+        <p>Powered by Monad Blockchain</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.13.4/ethers.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', initializePatientDashboard);
+    </script>
+</body>
+</html>

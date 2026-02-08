@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Dashboard - MediVault</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <img src="assets/logo.png" alt="MediVault Logo" class="logo">
+                <h1>MediVault - Doctor Portal</h1>
+            </div>
+            <div class="header-nav">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="#emergency" class="nav-link">Emergency</a>
+                <button id="disconnectBtn" class="button button-secondary button-small">Disconnect</button>
+            </div>
+        </div>
+    </div>
+
+    <main class="container dashboard-container">
+        <!-- Doctor Profile Section -->
+        <section class="card wallet-card">
+            <h2>👨‍⚕️ Doctor Profile</h2>
+            <div class="wallet-info">
+                <p class="wallet-address">
+                    <strong>Address:</strong>
+                    <span id="walletAddress">Loading...</span>
+                    <button id="copyAddressBtn" class="button button-small">Copy</button>
+                </p>
+                <p class="network-info">
+                    <strong>Network:</strong>
+                    <span id="networkInfo">Monad Testnet</span>
+                </p>
+            </div>
+            
+            <div id="doctorProfileDisplay" class="display-info hidden">
+                <h3>Your Profile</h3>
+                <div class="info-item">
+                    <label>Name:</label>
+                    <p id="doctorName">-</p>
+                </div>
+                <div class="info-item">
+                    <label>Specialization:</label>
+                    <p id="doctorSpec">-</p>
+                </div>
+                <div class="info-item">
+                    <label>License Number:</label>
+                    <p id="doctorLicense">-</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Register as Doctor -->
+        <section class="card form-card" id="registerSection">
+            <h2>📝 Register as Doctor</h2>
+            <p class="info-text">Complete your profile to access patient records</p>
+            <form id="registerDoctorForm" class="form">
+                <div class="form-group">
+                    <label for="docName">Full Name *</label>
+                    <input 
+                        type="text" 
+                        id="docName" 
+                        placeholder="Dr. John Doe"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="docSpecialization">Specialization *</label>
+                    <input 
+                        type="text" 
+                        id="docSpecialization" 
+                        placeholder="e.g., Cardiologist, Neurologist"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="docLicense">Medical License Number *</label>
+                    <input 
+                        type="text" 
+                        id="docLicense" 
+                        placeholder="License/Registration Number"
+                        required
+                    >
+                </div>
+
+                <button type="submit" class="button button-primary">Register Profile</button>
+            </form>
+        </section>
+
+        <!-- Patient Search Section -->
+        <section class="card">
+            <h2>🔍 Search Patient Records</h2>
+            <form id="searchPatientForm" class="form">
+                <div class="form-group">
+                    <label for="patientAddress">Patient's Wallet Address</label>
+                    <input 
+                        type="text" 
+                        id="patientAddress" 
+                        placeholder="0x..."
+                        required
+                    >
+                </div>
+                <button type="submit" class="button button-primary">Search Patient</button>
+            </form>
+        </section>
+
+        <!-- Patient Info Display -->
+        <section class="card" id="patientInfoSection" style="display: none;">
+            <h2>📋 Patient Information</h2>
+            <div id="patientInfoDisplay">
+                <div class="patient-header">
+                    <h3>Emergency Information</h3>
+                    <div class="info-item">
+                        <label>Blood Group:</label>
+                        <p id="patientBloodGroup">-</p>
+                    </div>
+                    <div class="info-item">
+                        <label>Emergency Contact:</label>
+                        <p id="patientContact">-</p>
+                    </div>
+                    <div class="info-item">
+                        <label>Medical Notes:</label>
+                        <p id="patientNotes">-</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Patient Documents -->
+        <section class="card" id="patientDocumentsSection" style="display: none;">
+            <h2>📄 Patient Documents</h2>
+            <button id="loadPatientDocumentsBtn" class="button button-secondary">Load Documents</button>
+            <div id="patientDocumentsList" class="records-list">
+                <p class="info-text">Click "Load Documents" to view patient files</p>
+            </div>
+        </section>
+
+        <!-- Patient Medical Records -->
+        <section class="card" id="patientRecordsSection" style="display: none;">
+            <h2>🏥 Medical History</h2>
+            <button id="loadPatientRecordsBtn" class="button button-secondary">Load Medical Records</button>
+            <div id="patientRecordsList" class="records-list">
+                <p class="info-text">Click "Load Medical Records" to view history</p>
+            </div>
+        </section>
+
+        <!-- Patient Visit History -->
+        <section class="card" id="patientVisitsSection" style="display: none;">
+            <h2>📅 Visit History</h2>
+            <button id="loadPatientVisitsBtn" class="button button-secondary">Load Visit History</button>
+            <div id="patientVisitsList" class="records-list">
+                <p class="info-text">Click "Load Visit History" to view appointments</p>
+            </div>
+        </section>
+
+        <!-- Add Medical Record -->
+        <section class="card" id="addRecordSection" style="display: none;">
+            <h2>➕ Add Medical Record</h2>
+            <form id="addRecordForm" class="form">
+                <input type="hidden" id="currentPatientAddress">
+                
+                <div class="form-group">
+                    <label for="diagnosis">Diagnosis *</label>
+                    <textarea 
+                        id="diagnosis" 
+                        placeholder="Medical diagnosis..."
+                        rows="3"
+                        required
+                    ></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="prescription">Prescription *</label>
+                    <textarea 
+                        id="prescription" 
+                        placeholder="Prescribed medications and dosage..."
+                        rows="4"
+                        required
+                    ></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="recordDocHash">Document Reference (Optional)</label>
+                    <input 
+                        type="text" 
+                        id="recordDocHash" 
+                        placeholder="IPFS hash or document reference"
+                    >
+                </div>
+
+                <button type="submit" class="button button-primary">Add Record</button>
+            </form>
+        </section>
+
+        <!-- Add Doctor Visit -->
+        <section class="card" id="addVisitSection" style="display: none;">
+            <h2>➕ Add Doctor Visit</h2>
+            <form id="addVisitForm" class="form">
+                <div class="form-group">
+                    <label for="visitReason">Visit Reason *</label>
+                    <input 
+                        type="text" 
+                        id="visitReason" 
+                        placeholder="e.g., Regular checkup, Follow-up"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="visitNotes">Visit Notes</label>
+                    <textarea 
+                        id="visitNotes" 
+                        placeholder="Notes from the visit..."
+                        rows="4"
+                    ></textarea>
+                </div>
+
+                <button type="submit" class="button button-primary">Save Visit</button>
+            </form>
+        </section>
+
+        <!-- Emergency Numbers -->
+        <section class="card emergency-card" id="emergency">
+            <h2>🚨 Emergency Helpline Numbers (India)</h2>
+            <div class="emergency-numbers">
+                <div class="emergency-item">
+                    <span class="emergency-name">National Emergency</span>
+                    <a href="tel:112" class="emergency-number">112</a>
+                </div>
+                <div class="emergency-item">
+                    <span class="emergency-name">Ambulance</span>
+                    <a href="tel:108" class="emergency-number">108</a>
+                </div>
+                <div class="emergency-item">
+                    <span class="emergency-name">Medical Emergency</span>
+                    <a href="tel:102" class="emergency-number">102</a>
+                </div>
+                <div class="emergency-item">
+                    <span class="emergency-name">Police</span>
+                    <a href="tel:100" class="emergency-number">100</a>
+                </div>
+                <div class="emergency-item">
+                    <span class="emergency-name">Fire</span>
+                    <a href="tel:101" class="emergency-number">101</a>
+                </div>
+                <div class="emergency-item">
+                    <span class="emergency-name">Women Helpline</span>
+                    <a href="tel:1091" class="emergency-number">1091</a>
+                </div>
+                <div class="emergency-item">
+                    <span class="emergency-name">Child Helpline</span>
+                    <a href="tel:1098" class="emergency-number">1098</a>
+                </div>
+                <div class="emergency-item">
+                    <span class="emergency-name">Mental Health</span>
+                    <a href="tel:08046110007" class="emergency-number">0804-611-0007</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Status Messages -->
+        <section class="status-section">
+            <div id="statusMessage" class="status-message hidden"></div>
+            <div id="loadingSpinner" class="loading-spinner hidden">
+                <div class="spinner"></div>
+                <p id="loadingText">Processing...</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2024 MediVault. Decentralized Healthcare Platform.</p>
+        <p>Powered by Monad Blockchain</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.13.4/ethers.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', initializeDoctorDashboard);
+    </script>
+</body>
+</html>

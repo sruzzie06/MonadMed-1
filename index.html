@@ -48,9 +48,21 @@
                     <p>Your data is encrypted and stored on the blockchain, ensuring it's always available when you need it most.</p>
                 </div>
 
-                <button id="connectWalletBtn" class="button button-primary button-large">
-                    Connect MetaMask Wallet
-                </button>
+                <div class="role-selection">
+                    <h3>Select Your Role</h3>
+                    <div class="role-buttons">
+                        <button id="connectPatientBtn" class="button button-primary button-role">
+                            <span class="role-icon">🏥</span>
+                            <span>Patient Portal</span>
+                            <small>Access your medical records</small>
+                        </button>
+                        <button id="connectDoctorBtn" class="button button-secondary button-role">
+                            <span class="role-icon">👨‍⚕️</span>
+                            <span>Doctor Portal</span>
+                            <small>Manage patient records</small>
+                        </button>
+                    </div>
+                </div>
 
                 <p id="connectionStatus" class="status-message"></p>
             </div>
@@ -88,8 +100,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.13.4/ethers.umd.min.js"></script>
     <script src="app.js"></script>
     <script>
-        // Initialize wallet connection on landing page
-        document.getElementById('connectWalletBtn').addEventListener('click', connectWallet);
+        // Initialize wallet connection with role selection
+        document.getElementById('connectPatientBtn').addEventListener('click', () => connectWithRole('patient'));
+        document.getElementById('connectDoctorBtn').addEventListener('click', () => connectWithRole('doctor'));
     </script>
 </body>
 </html>
